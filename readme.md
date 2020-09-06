@@ -36,6 +36,37 @@ for the Raspberry Pi on Ubuntu 20.04. So what I do instead is:
 - Now start python and try `import cv2` ... it should work without failure
     - Oh, make sure you installed `numpy` and any other requirements in your venv
 
+## Issues with Image View
+
+Don't upgrade the python Qt5 package, use what `apt` gives you!! Currently it is
+PyQt5 (5.14.1). I accidentally updated it using `pip` to 5.15 and shit broke.
+
+```
+% rqt
+RosPluginProvider.load(qt_gui_cpp/CppPluginProvider) exception raised in __builtin__.__import__(qt_gui_cpp.cpp_plugin_provider, [CppPluginProvider]):
+Traceback (most recent call last):
+ File "/opt/ros/foxy/lib/python3.8/site-packages/rqt_gui/ros_plugin_provider.py", line 80, in load
+   module = __builtin__.__import__(
+ File "/opt/ros/foxy/lib/python3.8/site-packages/qt_gui_cpp/cpp_plugin_provider.py", line 33, in <module>
+   from .cpp_binding_helper import qt_gui_cpp
+ File "/opt/ros/foxy/lib/python3.8/site-packages/qt_gui_cpp/cpp_binding_helper.py", line 43, in <module>
+   from . import libqt_gui_cpp_sip
+ValueError: PyCapsule_GetPointer called with incorrect name
+
+RecursivePluginProvider.discover() loading plugin "qt_gui_cpp/CppPluginProvider" failed:
+Traceback (most recent call last):
+ File "/opt/ros/foxy/lib/python3.8/site-packages/qt_gui/recursive_plugin_provider.py", line 60, in discover
+   instance = self._plugin_provider.load(plugin_descriptor.plugin_id(), None)
+ File "/opt/ros/foxy/lib/python3.8/site-packages/rqt_gui/ros_plugin_provider.py", line 91, in load
+   raise e
+ File "/opt/ros/foxy/lib/python3.8/site-packages/rqt_gui/ros_plugin_provider.py", line 80, in load
+   module = __builtin__.__import__(
+ File "/opt/ros/foxy/lib/python3.8/site-packages/qt_gui_cpp/cpp_plugin_provider.py", line 33, in <module>
+   from .cpp_binding_helper import qt_gui_cpp
+ File "/opt/ros/foxy/lib/python3.8/site-packages/qt_gui_cpp/cpp_binding_helper.py", line 43, in <module>
+   from . import libqt_gui_cpp_sip
+ValueError: PyCapsule_GetPointer called with incorrect name
+```
 
 # MIT License
 

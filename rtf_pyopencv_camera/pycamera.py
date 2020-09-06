@@ -17,7 +17,7 @@ class rtf_camera(Node):
 
         self.camera = cv2.VideoCapture(0)
 
-        self.timer = self.create_timer(1/3, self.callback)
+        self.timer = self.create_timer(1/30, self.callback)
 
         self.pub = self.create_publisher(Image, 'image', 10)
 
