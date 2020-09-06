@@ -37,8 +37,6 @@ class rtf_camera(Node):
             print(f"{Fore.RED}*** {e} ***{Fore.RESET}")
             return
 
-        # print(frame)
-
         try:
             stamp = self.get_clock().now().to_msg()
             self.msg.header.stamp = stamp
