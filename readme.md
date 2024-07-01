@@ -2,14 +2,40 @@
 
 This is a super simple pi camera node using python and opencv.
 
+```bash
+colcon build --packages-select rtf_pyopencv_camera
+. install/setup.bash
+ros2 run rtf_pyopencv_camera pycamera
+```
+
+- `pycamera`
+    - topics:
+        - `image`: uncompressed raw image
+        - `image_compressed`: jpeg compressed image, rectified if calibration info provided
+    - parameters:
+        - `size`: height x width, default [480,640]
+        - `camera_num`: default 0
+        - `encoding`: `bgr`, `rgb`, default `mono8`
+        - `rectified`: use calibration data to rectify image before sending, default `False`
+
 ## Alternatives
 
 - C++: [OpenCV_Cam](https://github.com/christianrauch/opencv_cam)
 - C++: [raspicam2_node](https://github.com/christianrauch/raspicam2_node)
 
+## Reference Work
+
+- [opencv_camera](https://github.com/MomsFriendlyRobotCompany/opencv_camera/tree/master)
+
+## Foxglove
+
+```bash
+ros2 launch foxglove_bridge foxglove_bridge_launch.xml
+```
+
 ## Setup Pi Camera
 
-I am using Ubuntu Server 20.04 on my Raspberry Pi.
+I am using Ubuntu Server 24.04 on my Raspberry Pi.
 
 - Add `start_x=1` to `/boot/firmware/config.txt`
     - *Note:* making the change to `/boot/firmware/usercfg.txt` doesn't work
@@ -22,51 +48,6 @@ Check all is working:
 - Run: `fswebcam --save test.jpg -d /dev/video0 -r 1280x960`
 - You should now have a jpeg taken from the camera
 
-## Setup OpenCV in a Virtual Environment
-
-I use a virtual environment and currently OpenCV 4.4 from pypi doesn't build
-for the Raspberry Pi on Ubuntu 20.04. So what I do instead is:
-
-- `sudo apt install python3-opencv`
-    - Problem is, this is not my my virtual environment
-- Now go inside your virtual env folder (for me it is `~/venv/lib/python3.8/site-packages`)
-- Run: `ln -s /usr/lib/python3/dist-package/cv2.cpython-38-aarch64-linux-gnu.so  .`
-    - Obviously, the library name will change over time, but this is the basic
-    idea
-- Now start python and try `import cv2` ... it should work without failure
-    - Oh, make sure you installed `numpy` and any other requirements in your venv
-
-## Issues with Image View
-
-Don't upgrade the python Qt5 package, use what `apt` gives you!! Currently it is
-PyQt5 (5.14.1). I accidentally updated it using `pip` to 5.15 and shit broke.
-
-```
-% rqt
-RosPluginProvider.load(qt_gui_cpp/CppPluginProvider) exception raised in __builtin__.__import__(qt_gui_cpp.cpp_plugin_provider, [CppPluginProvider]):
-Traceback (most recent call last):
- File "/opt/ros/foxy/lib/python3.8/site-packages/rqt_gui/ros_plugin_provider.py", line 80, in load
-   module = __builtin__.__import__(
- File "/opt/ros/foxy/lib/python3.8/site-packages/qt_gui_cpp/cpp_plugin_provider.py", line 33, in <module>
-   from .cpp_binding_helper import qt_gui_cpp
- File "/opt/ros/foxy/lib/python3.8/site-packages/qt_gui_cpp/cpp_binding_helper.py", line 43, in <module>
-   from . import libqt_gui_cpp_sip
-ValueError: PyCapsule_GetPointer called with incorrect name
-
-RecursivePluginProvider.discover() loading plugin "qt_gui_cpp/CppPluginProvider" failed:
-Traceback (most recent call last):
- File "/opt/ros/foxy/lib/python3.8/site-packages/qt_gui/recursive_plugin_provider.py", line 60, in discover
-   instance = self._plugin_provider.load(plugin_descriptor.plugin_id(), None)
- File "/opt/ros/foxy/lib/python3.8/site-packages/rqt_gui/ros_plugin_provider.py", line 91, in load
-   raise e
- File "/opt/ros/foxy/lib/python3.8/site-packages/rqt_gui/ros_plugin_provider.py", line 80, in load
-   module = __builtin__.__import__(
- File "/opt/ros/foxy/lib/python3.8/site-packages/qt_gui_cpp/cpp_plugin_provider.py", line 33, in <module>
-   from .cpp_binding_helper import qt_gui_cpp
- File "/opt/ros/foxy/lib/python3.8/site-packages/qt_gui_cpp/cpp_binding_helper.py", line 43, in <module>
-   from . import libqt_gui_cpp_sip
-ValueError: PyCapsule_GetPointer called with incorrect name
-```
 
 # MIT License
 
