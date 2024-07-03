@@ -18,6 +18,12 @@ ros2 run rtf_pyopencv_camera pycamera
         - `encoding`: `bgr`, `rgb`, default `mono8`
         - `rectified`: use calibration data to rectify image before sending, default `False`
 
+## Launch
+
+```bash
+$ ros2 launch rtf_pyopencv_camera pycamera_foxglove_launch.py
+```
+
 ## Alternatives
 
 - C++: [OpenCV_Cam](https://github.com/christianrauch/opencv_cam)
