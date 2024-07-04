@@ -8,13 +8,27 @@ colcon build --packages-select rtf_pyopencv_camera
 ros2 run rtf_pyopencv_camera pycamera
 ```
 
+```bash
+ros2 param set <node_name> <param_name> <param_value>
+ros2 param load <node_name> <parameter_file>
+ros2 run <package_name> <executable_name> --ros-args --params-file <file_name>
+```
+
+```yaml
+/rtf_camera:
+  ros__parameters:
+    camera_num: 2
+    camera_size: 720
+```
+
 - `pycamera`
     - topics:
         - `image`: uncompressed raw image
         - `image_compressed`: jpeg compressed image, rectified if calibration info provided
-    - parameters:
-        - `size`: height x width, default [480,640]
+    - CLI arguments
         - `camera_num`: default 0
+    - parameters:
+        - `camera_size`: image size [height, width], default 320
         - `encoding`: `bgr`, `rgb`, default `mono8`
         - `rectified`: use calibration data to rectify image before sending, default `False`
 
