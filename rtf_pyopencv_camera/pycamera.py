@@ -30,7 +30,9 @@ gray2bgr = lambda im: cv2.cvtColor(im, cv2.COLOR_GRAY2BGR)
 rgb2gray = lambda im: cv2.cvtColor(im, cv2.COLOR_RGB2GRAY)
 gray2rgb = lambda im: cv2.cvtColor(im, cv2.COLOR_GRAY2RGB)
 
-
+camera320 = [240,320]
+camera480 = [480,640]
+camera720 = [720,1280]
 
 class rtf_camera(Node):
     def __init__(self, camera_num=0, i2c=None):
