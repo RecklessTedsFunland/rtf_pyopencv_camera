@@ -1,0 +1,5 @@
+---
+/pycamera_node:
+  ros__parameters:
+    camera_num: 0
+    camera_size: 720

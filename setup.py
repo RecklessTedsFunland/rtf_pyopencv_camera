@@ -22,7 +22,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'pycamera = rtf_pyopencv_camera.pycamera:main'
+            'pycamera_node = rtf_pyopencv_camera.pycamera_node:main',
+            'grab_node = rtf_pyopencv_camera.grab_node:main'
         ],
     },
 )

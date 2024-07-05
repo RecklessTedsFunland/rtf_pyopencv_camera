@@ -1,19 +1,10 @@
 from launch import LaunchDescription
 from launch_ros.actions import Node
-from math import pi
 # from rosbag2.launch_actions import Record
 import os
 from ament_index_python.packages import get_package_share_directory
 from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-
-# Ref
-# https://github.com/foxglove/ros-foxglove-bridge
-
-world2cam = "--x {x} --y {y} --z {z} ".format(x=0.2, y=0.0, z=0.2)
-world2cam += "--yaw {yaw} --pitch {pitch} --roll {roll} ".format(yaw=0*pi/180, pitch=0*pi/180, roll=0*pi/180)
-world2cam += "--child-frame-id {child} --frame-id {parent}".format(child="camera", parent="world")
-world2cam = world2cam.split(' ')
 
 def generate_launch_description():
     return LaunchDescription([
@@ -33,13 +24,8 @@ def generate_launch_description():
         ),
         Node(
             package='rtf_pyopencv_camera',
-            executable='pycamera_node',
+            executable='pycamera',
             name='camera'
-        ),
-        Node(
-            package = "tf2_ros",
-            executable = "static_transform_publisher",
-            arguments = world2cam
         ),
         # Record(
         #     name='my_recorder',

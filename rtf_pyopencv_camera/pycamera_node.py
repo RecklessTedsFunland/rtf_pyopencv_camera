@@ -121,8 +121,27 @@ class rtf_camera(Node):
                 cameraInfo_msg.P = calib_data["projection_matrix"]["data"]
                 return cameraInfo_msg
         except:
-            print(f"{Fore.RED}*** Invalid YAML file: {fname} ***{Fore.RESET}")
-            return None
+            # print(f"{Fore.RED}*** Invalid YAML file: {fname} ***{Fore.RESET}")
+            # return None
+            height, width = 0, 0
+            D =  [-0.33758562758914146, 0.11161239414304096, -0.00021819272592442094, -3.029195446330518e-05]
+            K =  [430.21554970319971, 0.0, 306.6913434743704, 0.0, 430.53169252696676, 227.22480030078816, 0.0, 0.0, 1.0]
+            R =  [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+            P =  [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0]
+            if camera_size == 240: height, width = camera320
+            elif camera_size == 480: height, width = camera480
+            elif camera_size == 720: height, width = camera720
+            elif camera_size == 1080: height, width = camera1080
+            cameraInfo_msg = CameraInfo()
+            cameraInfo.header.frame_id = self.frame_id
+            cameraInfo_msg.width = width
+            cameraInfo_msg.height = height
+            cameraInfo_msg.distortion_model = calib_data["distortion_model"]
+            cameraInfo_msg.K = K # calib_data["camera_matrix"]["data"]
+            cameraInfo_msg.D = D # calib_data["distortion_coefficients"]["data"]
+            cameraInfo_msg.R = R # calib_data["rectification_matrix"]["data"]
+            cameraInfo_msg.P = P # calib_data["projection_matrix"]["data"]
+            return cameraInfo_msg
 
     def set_encoding(self, p):
         self.encoding = param2py(p.value)

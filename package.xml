@@ -3,9 +3,9 @@
 <package format="3">
   <name>rtf_pyopencv_camera</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
+  <description>OpenCV Camera package</description>
   <maintainer email="walchko@users.noreply.github.com">kevin</maintainer>
-  <license>TODO: License declaration</license>
+  <license>MIT</license>
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>

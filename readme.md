@@ -5,7 +5,7 @@ This is a super simple pi camera node using python and opencv.
 ```bash
 colcon build --packages-select rtf_pyopencv_camera
 . install/setup.bash
-ros2 run rtf_pyopencv_camera pycamera
+ros2 run rtf_pyopencv_camera pycamera_node
 ```
 
 ```bash
@@ -15,13 +15,13 @@ ros2 run <package_name> <executable_name> --ros-args --params-file <file_name>
 ```
 
 ```yaml
-/rtf_camera:
+/pycamera_node:
   ros__parameters:
-    camera_num: 2
+    camera_num: 0
     camera_size: 720
 ```
 
-- `pycamera`
+- `pycamera_node`
     - topics:
         - `image`: uncompressed raw image
         - `image_compressed`: jpeg compressed image, rectified if calibration info provided
@@ -31,6 +31,10 @@ ros2 run <package_name> <executable_name> --ros-args --params-file <file_name>
         - `camera_size`: image size [height, width], default 320
         - `encoding`: `bgr`, `rgb`, default `mono8`
         - `rectified`: use calibration data to rectify image before sending, default `False`
+- `grab_node`
+    - capture image: `ros2 service call /capture std_srvs/srv/Empty`
+    - TODO: Add video capture `capture_video` and `capture_image`
+
 
 ## Launch
 
@@ -67,7 +71,6 @@ Check all is working:
 - `sudo apt install fswebcam`
 - Run: `fswebcam --save test.jpg -d /dev/video0 -r 1280x960`
 - You should now have a jpeg taken from the camera
-
 
 # MIT License
 
